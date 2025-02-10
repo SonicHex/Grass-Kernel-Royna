@@ -26,10 +26,6 @@ jobs:
           wget https://github.com/XSans0/WeebX-Clang/releases/download/WeebX-Clang-${{matrix.clang_ver}}-release/WeebX-Clang-${{matrix.clang_ver}}.tar.gz -O "weebx-clang.tar.gz"
           rm -rf toolchain && mkdir toolchain && tar -xvf weebx-clang.tar.gz -C toolchain && rm -rf weebx-clang.tar.gz
           
-      - name: Spoof KernelSU Version
-        if: ${{matrix.extra_flags != '--no-ksu'}} 
-        run: sed -i ':a;N;$!ba;s/\$(eval KSU_VERSION=\$(shell expr 10000 + \$(KSU_GIT_VERSION) + 169))/\$(eval KSU_VERSION=11701)/' ./KernelSU/kernel/Makefile
-
       - name: Build
         run: python build_kernel.py --${{matrix.build_type}} --target=${{matrix.device}}${{matrix.extra_flags}}
 

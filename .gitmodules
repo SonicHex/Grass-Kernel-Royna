@@ -1,6 +1,7 @@
 [submodule "KernelSU"]
 	path = KernelSU
-	url = https://github.com/tiann/KernelSU
+	url = https://github.com/backslashxx/KernelSU
+	branch = 12026-susfs154
 [submodule "AnyKernel3"]
 	path = AnyKernel3
 	url = https://github.com/Roynas-Android-Playground/kernel_packaging_anykernel3
