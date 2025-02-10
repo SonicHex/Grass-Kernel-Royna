@@ -11,7 +11,7 @@ jobs:
       matrix:
         device: [a51, m31]
         clang_ver: ['19.1.5', '18.1.8']
-    name: "Build for ${{matrix.device}} (${{matrix.build_type}})"
+    name: "Build for ${{matrix.device}} (Clang ${{matrix.clang_ver}})"
     steps:
       - name: Checkout
         uses: actions/checkout@main
