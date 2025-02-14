@@ -31,4 +31,4 @@ jobs:
           name: "${{steps.date.outputs.date}}"
           tag_name: "${{steps.date.outputs.date}}"
           prerelease: false
-          files: /home/runner/Grass*/*.zip
+          files: /home/runner/Grass*.zip
