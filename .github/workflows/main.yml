@@ -11,8 +11,7 @@ jobs:
       matrix:
         build_type: ['AOSP', 'OneUI']
         device: ['a51', 'm21', 'm31', 'm31s', 'f41', 'm30s']
-        clang_ver: ['19.1.5', '18.1.8']
-    name: "Build for ${{matrix.device}} ${{matrix.build_type}} (Clang ${{matrix.clang_ver}})"
+    name: "Build for ${{matrix.device}} ${{matrix.build_type}}"
     steps:
       - name: Checkout
         uses: actions/checkout@main
@@ -22,27 +21,27 @@ jobs:
           
       - name: Install WeebX Clang
         run: |
-          wget https://github.com/XSans0/WeebX-Clang/releases/download/WeebX-Clang-${{matrix.clang_ver}}-release/WeebX-Clang-${{matrix.clang_ver}}.tar.gz -O "weebx-clang.tar.gz"
+          wget https://github.com/XSans0/WeebX-Clang/releases/download/WeebX-Clang-19.1.5-release/WeebX-Clang-19.1.5.tar.gz -O "weebx-clang.tar.gz"
           rm -rf toolchain && mkdir toolchain && tar -xvf weebx-clang.tar.gz -C toolchain && rm -rf weebx-clang.tar.gz
           
       - name: Build
         run: |
           BUILD_TYPE_LOWER=$(echo "${{matrix.build_type}}" | tr '[:upper:]' '[:lower:]')
           python build_kernel.py --$BUILD_TYPE_LOWER --target=${{matrix.device}}
-          mv GrassKernel_*_*_*.zip "GrassKernel_${{matrix.device}}_${{matrix.build_type}}_Clang${{matrix.clang_ver}}.zip"
+          mv GrassKernel_*_*_*.zip "GrassKernel_${{matrix.device}}_${{matrix.build_type}}.zip"
 
       - name: Upload Kernel
         if: success()
         uses: actions/upload-artifact@main
         with:
-          name: GrassKernel_${{matrix.device}}_${{matrix.build_type}}_Clang${{matrix.clang_ver}}
-          path: "GrassKernel_${{matrix.device}}_${{matrix.build_type}}_Clang${{matrix.clang_ver}}.zip"
+          name: GrassKernel_${{matrix.device}}_${{matrix.build_type}}
+          path: "GrassKernel_${{matrix.device}}_${{matrix.build_type}}.zip"
           if-no-files-found: error
 
       - name: Upload Logs
         if: failure()
         uses: actions/upload-artifact@main
         with:
-          name: GrassKernel_${{matrix.device}}_${{matrix.build_type}}_Clang${{matrix.clang_ver}}-LOG
+          name: GrassKernel_${{matrix.device}}_${{matrix.build_type}}-LOG
           path: "*.log"
           if-no-files-found: warn
